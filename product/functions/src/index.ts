@@ -116,12 +116,14 @@ app.delete("/products/:productId", (req, res) => {
 
 // Update a product
 app.put("/products/:productId", (req, res) => {
+
+  let product : Product = {
+     name: req.body["name"],
+      price: req.body["price"],
+      quantity: req.body["quantity"],
+  }
   const productId = req.params.productId;
 
-  db.ref("products").child(productId).update({
-    "name": "AA",
-    "price": 123,
-    "quantity": 234
-  });
+  db.ref("products").child(productId).update(product);
   res.status(200).send("Product updated successfully");
 })
