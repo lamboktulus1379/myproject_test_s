@@ -21,7 +21,7 @@ const main = express();
 
 // add the path to receive request and 
 // set json as bodyParser to process the body
-main.use("/ai/v1", app);
+main.use("/api/v1", app);
 main.use(bodyParser.json());
 main.use(bodyParser.urlencoded({extended: false}));
 
@@ -87,3 +87,22 @@ app.delete("/users/:userId", (req, res) => {
     res.status(500).send(error);
   });
 });
+
+// Update a user
+app.put("/users/:userId", (req, res) => {
+   const user: User = {
+      firstName: req.body["firstName"],
+      lastName: req.body["lastName"],
+      email: req.body["email"],
+      areaNumber: req.body["areaNumber"],
+      department: req.body["department"],
+      id: req.body["id"],
+      contactNumber: req.body["contactNumber"],
+    };
+
+  db.collection(userCollection).doc(req.params.userId).update(user).then(() => {
+    res.status(200).send("Document successfully updated!!!");
+  }).catch((err) => {
+    res.status(500).send(err);
+  });
+})
