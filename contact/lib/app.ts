@@ -7,7 +7,7 @@ class App {
   public app: express.Application;
   public routePrv: Routes = new Routes();
 
-  public mongoUrl: string = 'mongodb://localhost/CRMdb';
+  public mongoUrl: string = 'mongodb://mongo/CRMdb';
 
   /**
    *
@@ -20,7 +20,9 @@ class App {
   }
   private mongoSetup() {
     (mongoose as any).Promise = global.Promise;
-    mongoose.connect(this.mongoUrl);
+    mongoose.connect(this.mongoUrl).catch(err => {
+      console.log("Error: ", err);
+    });
   }
 
   private config(): void {
