@@ -20,3 +20,8 @@ services:
       - ./data:/data/db
     ports:
       - "2017:2017"
+  redis:
+    image: redis
+    container_name: cache
+    expose:
+      - 6379
