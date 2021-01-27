@@ -48,7 +48,7 @@ export class ContactController {
       if (err) {
         res.send(err);
       }
-      res.json("Contact successfully deleted")
+      res.json({message: "Contact successfully deleted"})
     })
   }
 }
