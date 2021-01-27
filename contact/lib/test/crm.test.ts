@@ -1,27 +1,32 @@
-let mongoose = require("mongoose");
-let Crm = require("../models/crmModel");
+import { ContactSchema } from "../models/crmModel";
 
-let chai = require("chai");
+let mongoose = require("mongoose");
+
+let ch = require("chai");
 let chaiHttp = require("chai-http");
 let server = require("../server");
-let should = chai.should();
+let should = ch.should();
 
-chai.use(chaiHttp);
+ch.use(chaiHttp);
+
+const Contact = mongoose.model('Contact', ContactSchema);
 
 describe('Contacts', () => {
     beforeEach((done) => { 
-        Crm.remove({}, (err) => {
+      
+        Contact.deleteOne ({}, () => {
            done();
         });
     });
+    
 /*
   * Test the /GET route
   */
   describe('/GET contact', () => {
       it('it should GET all the contacts', (done) => {
-        chai.request(server)
+        ch.request(server)
             .get('/contact')
-            .end((err, res) => {
+            .end((err :any, res : any) => {
                   res.should.have.status(200);
                   res.body.should.be.a('array');
                   res.body.length.should.be.eql(0);

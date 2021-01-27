@@ -7,7 +7,7 @@ class App {
   public app: express.Application;
   public routePrv: Routes = new Routes();
 
-  public mongoUrl: string = 'mongodb://mongo/CRMdb';
+  public mongoUrl: string = 'mongodb://localhost/CRMdb';
 
   /**
    *
