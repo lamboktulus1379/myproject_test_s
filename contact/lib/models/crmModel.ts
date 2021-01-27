@@ -25,3 +25,5 @@ export const ContactSchema = new Schema({
     default: Date.now
   }
 })
+
+module.exports = mongoose.model("Contact", ContactSchema);

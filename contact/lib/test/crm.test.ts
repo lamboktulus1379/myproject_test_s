@@ -1,5 +1,3 @@
-import { ContactSchema } from "../models/crmModel";
-
 let mongoose = require("mongoose");
 
 let ch = require("chai");
@@ -9,12 +7,12 @@ let should = ch.should();
 
 ch.use(chaiHttp);
 
-const Contact = mongoose.model('Contact', ContactSchema);
+const Contact = require('../models/crmModel');
 
 describe('Contacts', () => {
     beforeEach((done) => { 
       
-        Contact.deleteOne ({}, () => {
+        Contact.deleteMany({}, () => {
            done();
         });
     });
@@ -35,4 +33,30 @@ describe('Contacts', () => {
       });
   });
 
+  /**
+   * Test the /POST Route
+   */
+  describe('/POST Contact', () => {
+    it('it should not POST a contact without first name field', (done) => {
+let contact = {
+      lastName: "Simamora",
+      email: "lamboktulus1379@gmail.com",
+      areaNumber: "14000",
+      department: "IT",
+      id: "1",
+      contactNumber: "082274140481"
+};
+ch.request(server)
+.post('/contact')
+.send(contact)
+.end((err :any, res : any) => {
+  res.should.have.status(200);
+  res.body.should.be.a('object');
+  res.body.should.have.property('errors');
+  res.body.errors.should.have.property('firstName');
+  done();
+
+    });
+  });
+});
 });
